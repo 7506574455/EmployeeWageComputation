@@ -1,34 +1,32 @@
 echo "Welcome to Employee Wage Computation program"
 
-isPartTimePresent=2
-isFullTimePresent=1
-isAbsent=0
-wagePerHour=20
-workingDays=20
-maxHrsInMonth=100
-monthSalary=0
-totalWorkingHr=0
-function getWorkingHours() {
-	case $empCheck in
-		$isFullTimePresent)
-			workingHr=8
-			;;
-		$isPartTimePresent)
-			workingHr=4
-			;;
-		*)
-			workingHr=0
-			;;
-	esac
-	echo $workingHr
-}
-
-for (( i=0; i<$workingDays && $totalWorkingHr<$maxHrsInMonth; i++ ))
+isPartTime=1
+isfullTime=2
+totalSalary=0
+empRatePerHr=20
+numWorkingDays=0
+hrcheck=0
+while [ $hrcheck -le 100 ] || [  $numWorkingDays -le 20 ]
 do
-	empCheck=$((RANDOM%3))
-	workingHr="$( getWorkingHours $empCheck )"
-	totalWorkingHr=$((totalWorkingHr+workingHr))
+        empCheck=$((RANDOM%3));
+                case $empCheck in
+                        $isfullTime)
+                                empHr=8
+                                ;;
+                        $isPartTime)
+                                empHr=4
+                                ;;
+                        *)
+                        empHr=0
+                                ;;
+                esac
+      hrcheck=$(($hrcheck+$empHr))
+      salary=$(($empHr*$empRatePerHr))
+      Dailywage[$numWorkingDays]=$salary
+      totalSalary=$(($totalSalary+$salary))
+       totalwage[$numWorkingDays]=$totalSalary
+      ((numWorkingDays++))
 done
-monthSalary=$((wagePerHour*totalWorkingHr))
-echo "Employee monthly wage : $monthSalary"
+echo "Total salay ="${totalwage[@]}
+echo "Daily salary="${Dailywage[@]}
 
